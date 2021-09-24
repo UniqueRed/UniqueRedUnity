@@ -24,10 +24,6 @@ public class LeftSwing : MonoBehaviour {
         }
     }
 
-
-    /// <summary>
-    /// Call whenever we want to start a grapple
-    /// </summary>
     void StartSwing()
     {
         RaycastHit hit;
@@ -40,30 +36,29 @@ public class LeftSwing : MonoBehaviour {
 
             float distanceFromPoint = Vector3.Distance(player.position, swingPoint);
 
-            //The distance grapple will try to keep from grapple point. 
+            //Distance from swing point
             joint.maxDistance = distanceFromPoint * 0.01f;
             joint.minDistance = distanceFromPoint * 0.001f;
 
-            //Adjust these values to fit your game.
+            //Values
             joint.spring = spring;
             joint.damper = damper;
             joint.massScale = massScale;
         }
     }
 
-
-    /// <summary>
-    /// Call whenever we want to stop a grapple
-    /// </summary>
-    void StopSwing() {
+    void StopSwing()
+    {
         Destroy(joint);
     }
 
-    public bool IsSwinging() {
+    public bool IsSwinging()
+    {
         return joint != null;
     }
 
-    public Vector3 GetSwingPoint() {
+    public Vector3 GetSwingPoint()
+    {
         return swingPoint;
     }
 }
