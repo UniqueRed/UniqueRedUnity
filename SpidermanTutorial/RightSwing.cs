@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LeftSwing : MonoBehaviour {
+public class RightSwing : MonoBehaviour {
 
     private Vector3 swingPoint;
     public LayerMask whatIsSwingable;
