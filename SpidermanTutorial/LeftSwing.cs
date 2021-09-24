@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class LeftSwing : MonoBehaviour {
 
-    private Vector3 grapplePoint;
-    public LayerMask whatIsGrappleable;
+    private Vector3 swingPoint;
+    public LayerMask whatIsSwingable;
     public Transform origin, camera, player;
     private float maxDistance = 75f;
     private SpringJoint joint;
@@ -12,12 +12,15 @@ public class LeftSwing : MonoBehaviour {
     public float massScale = 4.5f;
 
 
-    void Update() {
-        if (Input.GetMouseButtonDown(0)) {
-            StartGrapple();
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            StartSwing();
         }
-        else if (Input.GetMouseButtonUp(0)) {
-            StopGrapple();
+        else if (Input.GetMouseButtonUp(0))
+        {
+            StopSwing();
         }
     }
 
@@ -25,15 +28,17 @@ public class LeftSwing : MonoBehaviour {
     /// <summary>
     /// Call whenever we want to start a grapple
     /// </summary>
-    void StartGrapple() {
+    void StartSwing()
+    {
         RaycastHit hit;
-        if (Physics.Raycast(camera.position, camera.forward, out hit, maxDistance, whatIsGrappleable)) {
-            grapplePoint = hit.point;
+        if (Physics.Raycast(camera.position, camera.forward, out hit, maxDistance, whatIsSwingable))
+        {
+            swingPoint = hit.point;
             joint = player.gameObject.AddComponent<SpringJoint>();
             joint.autoConfigureConnectedAnchor = false;
-            joint.connectedAnchor = grapplePoint;
+            joint.connectedAnchor = swingPoint;
 
-            float distanceFromPoint = Vector3.Distance(player.position, grapplePoint);
+            float distanceFromPoint = Vector3.Distance(player.position, swingPoint);
 
             //The distance grapple will try to keep from grapple point. 
             joint.maxDistance = distanceFromPoint * 0.01f;
@@ -50,15 +55,15 @@ public class LeftSwing : MonoBehaviour {
     /// <summary>
     /// Call whenever we want to stop a grapple
     /// </summary>
-    void StopGrapple() {
+    void StopSwing() {
         Destroy(joint);
     }
 
-    public bool IsGrappling() {
+    public bool IsSwinging() {
         return joint != null;
     }
 
-    public Vector3 GetGrapplePoint() {
-        return grapplePoint;
+    public Vector3 GetSwingPoint() {
+        return swingPoint;
     }
 }
